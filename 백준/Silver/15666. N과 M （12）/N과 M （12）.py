@@ -1,20 +1,22 @@
 import sys 
+sys.setrecursionlimit(10000)
 
-input = sys.stdin.readline
-N, M = map(int, input().split())
-numbers = sorted(list(map(int, input().split())))
-result = []
-visited = set()
-
-def backtrack(start, path):
-    if len(path) == M:
-        tup = tuple(path)
-        if tup not in visited:
-            visited.add(tup)
-            print(' '.join(map(str, path)))
-        return
+def DFS(idx,seq):
+    global arr,M
     
-    for i in range(start, N):
-        backtrack(i, path + [numbers[i]])
+    if len(seq) == M:
+        print(' '.join(map(str,seq)))
+        return 
+        
+    for i in range(idx,len(arr)):
+        seq.append(arr[i])
+        DFS(i,seq[:])
+        seq.pop()
+      
 
-backtrack(0, [])
+N,M = map(int,sys.stdin.readline().split())
+arr = list(set(list(map(int,sys.stdin.readline().split()))))
+arr.sort()
+DFS(0,[])
+
+
