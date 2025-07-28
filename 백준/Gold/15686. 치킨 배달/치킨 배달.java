@@ -5,11 +5,10 @@ public class Main {
     static int N, M;
     static List<int[]> houses = new ArrayList<>();
     static List<int[]> chickens = new ArrayList<>();
-    static int minCityChickenDist = Integer.MAX_VALUE;
+    static int total = Integer.MAX_VALUE;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
@@ -25,13 +24,14 @@ public class Main {
 
         comb(0, 0, new int[M]);
 
-        System.out.println(minCityChickenDist);
+        System.out.println(total);
+        br.close();
     }
 
     static void comb(int start, int depth, int[] selected) {
         if (depth == M) {
-            int cityDist = getCityChickenDistance(selected);
-            minCityChickenDist = Math.min(minCityChickenDist, cityDist);
+            int cityDist = getDist(selected);
+            total = Math.min(total, cityDist);
             return;
         }
 
@@ -41,7 +41,7 @@ public class Main {
         }
     }
 
-    static int getCityChickenDistance(int[] selected) {
+    static int getDist(int[] selected) {
         int total = 0;
         for (int[] house : houses) {
             int minDist = Integer.MAX_VALUE;
