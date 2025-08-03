@@ -4,10 +4,7 @@ import java.util.*;
 public class Main {
 
 	public static void dfs(int curr,boolean[] visited, ArrayList<Integer>[] matrix) {
-		if(visited[curr]) {return;} 
-		
 		visited[curr] = true; 
-		if(matrix[curr].size()==0) {return;}
 		for(int node : matrix[curr]) {
 			if (!visited[node]) {
 				dfs(node,visited,matrix);}
