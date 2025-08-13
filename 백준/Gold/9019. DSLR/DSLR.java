@@ -44,16 +44,16 @@ public class Main {
 			if(curr.val == B) {return curr.cmd;}
 			
 			int dnum = D(curr.val);
-			if(0<=dnum && dnum<=10000 &&!v[dnum]) {v[dnum]= true;q.offer(new Num(dnum,curr.cmd+"D"));}
+			if(!v[dnum]) {v[dnum]= true;q.offer(new Num(dnum,curr.cmd+"D"));}
 			
 			int snum = S(curr.val);
-			if(0<=snum && snum<=10000 && !v[snum]) {v[snum]= true;q.offer(new Num(snum,curr.cmd+"S"));}
+			if(!v[snum]) {v[snum]= true;q.offer(new Num(snum,curr.cmd+"S"));}
 			
 			int lnum = L(curr.val);
-			if(0<=lnum && lnum<=10000 && !v[lnum]) {v[lnum]= true;q.offer(new Num(lnum,curr.cmd+"L"));}
+			if(!v[lnum]) {v[lnum]= true;q.offer(new Num(lnum,curr.cmd+"L"));}
 			
 			int rnum = R(curr.val);
-			if(0<=rnum && rnum<=10000 && !v[rnum]) {v[rnum]= true;q.offer(new Num(rnum,curr.cmd+"R"));}
+			if(!v[rnum]) {v[rnum]= true;q.offer(new Num(rnum,curr.cmd+"R"));}
 
 		}
 		
@@ -94,3 +94,4 @@ public class Main {
 	}
 
 }
+
