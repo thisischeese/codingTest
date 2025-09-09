@@ -1,45 +1,78 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+class TrieNode {
+    TrieNode[] children = new TrieNode[10];
+    boolean isEnd = false;
+}
 
-	public static int t; 
-	public static String[] nums;
-	public static StringBuilder sb = new StringBuilder();
-	public static String solution() {
-        // 1. 전화번호 목록을 사전순으로 정렬한다.
-        Arrays.sort(nums);
-        
-        // 2. 인접한 번호끼리 접두어 관계인지 확인한다.
-        // 마지막 번호는 비교 대상이 없으므로 n-1까지만 반복한다.
-        for (int i = 0; i < nums.length - 1; i++) {
-            // 다음 번호가 현재 번호로 시작하는지(접두어인지) 확인한다.
-            if (nums[i+1].startsWith(nums[i])) {
-                // 접두어인 경우가 하나라도 있으면 일관성이 없으므로 "NO"를 반환한다.
-                return "NO";
+class Trie {
+    TrieNode root;
+
+    public Trie() {
+        root = new TrieNode();
+    }
+
+    public void insert(String word) {
+        TrieNode node = this.root;
+        for (int i = 0; i < word.length(); i++) {
+            int idx = word.charAt(i) - '0';
+            if (node.children[idx] == null) {
+                node.children[idx] = new TrieNode();
+            }
+            node = node.children[idx];
+        }
+        node.isEnd = true;
+    }
+
+
+    public boolean isPrefix(String word) {
+        TrieNode node = this.root;
+        for (int i = 0; i < word.length(); i++) {
+            int idx = word.charAt(i) - '0';
+            node = node.children[idx];
+        }
+
+
+        for (int i = 0; i < 10; i++) {
+            if (node.children[i] != null) {
+                return true;
             }
         }
-        
-        // 반복문이 끝날 때까지 접두어 관계를 찾지 못했다면 일관성이 있는 것이다.
-        return "YES";
+        return false;
     }
-    public static void main(String[] args) throws Exception {
+}
+
+public class Main {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        t = Integer.parseInt(br.readLine());
+        int t = Integer.parseInt(br.readLine());
+        StringBuilder sb = new StringBuilder();
 
         while (t-- > 0) {
             int n = Integer.parseInt(br.readLine());
-            nums = new String[n];
+            String[] numbers = new String[n];
+            Trie trie = new Trie();
+
             for (int i = 0; i < n; i++) {
-                nums[i] = br.readLine();
+                numbers[i] = br.readLine();
+                trie.insert(numbers[i]);
             }
 
-            sb.append(solution()).append("\n");
+            boolean ok = true;
+            for (String num : numbers) {
+                if (trie.isPrefix(num)) {
+                    ok = false;
+                    break;
+                }
+            }
+
+            if (ok) {
+                sb.append("YES\n");
+            } else {
+                sb.append("NO\n");
+            }
         }
         System.out.print(sb.toString());
-        br.close();
     }
-
-    
 }
-
