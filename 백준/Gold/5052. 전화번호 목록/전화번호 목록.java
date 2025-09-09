@@ -49,7 +49,8 @@ public class Main {
         int t = Integer.parseInt(br.readLine());
         StringBuilder sb = new StringBuilder();
 
-        while (t-- > 0) {
+        while  (t>0){
+            t--;
             int n = Integer.parseInt(br.readLine());
             String[] numbers = new String[n];
             Trie trie = new Trie();
