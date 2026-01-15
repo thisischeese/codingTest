@@ -14,7 +14,6 @@ def bf(V,E):
 
             if(distance[next_node]>distance[curr_node]+cost):
                 distance[next_node] = distance[curr_node]+cost
-                # 노드와 노드 간 통행 가능한 간선이 여러개 -> 기존 종료 조건 들어맞지 x 
 
                 if(i==V-1): 
                     return True 
@@ -53,4 +52,5 @@ for tc in range(TC):
 # 그래프 내 음의 사이클이 존재하는가? 를 체크하는 문제 
 # 주의할 점 
 # 도로는 방향이 없으나.. 웜홀은 방향이 있다..!!!!!!!!!!!!!
+
 
