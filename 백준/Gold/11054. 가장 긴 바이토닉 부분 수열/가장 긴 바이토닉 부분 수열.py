@@ -1,23 +1,31 @@
 import sys 
+import bisect 
+
+input = sys.stdin.readline 
 
 N = int(input())
-arr = list(map(int,input().split()))
+arr = list(map(int, input().split()))
 
-dp_asc = [1]*N
-dp_desc = [1]*N
+def get_lis(seq):
+    
+    tails = []
+    dp = []
 
-for i in range(N):
-    for j in range(i+1,N):
-        if(arr[i]<arr[j]):
-            dp_asc[j] = max(dp_asc[i]+1,dp_asc[j])
-
-for i in range(N-1,-1,-1):
-    for j in range(i-1,-1,-1):
-        if(arr[i]<arr[j]):
-            dp_desc[j] = max(dp_desc[i]+1,dp_desc[j])
+    for s in seq:
+        if not tails or tails[-1]<s:
+            tails.append(s)
+            dp.append(len(tails))
+        else: 
+            idx = bisect.bisect_left(tails,s)
+            tails[idx] = s 
+            dp.append(idx+1)
+    return dp
+            
+dp_asc = get_lis(arr)
+dp_desc = get_lis(arr[::-1])[::-1]
 
 answer = 0
 for i in range(N):
-    answer = max(dp_asc[i]+dp_desc[i],answer)
+    answer = max(answer, dp_asc[i] + dp_desc[i] - 1)
 
-print(answer-1)
+print(answer)
