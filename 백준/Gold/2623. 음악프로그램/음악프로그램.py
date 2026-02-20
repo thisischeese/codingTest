@@ -12,31 +12,18 @@ def ts():
 
     while(queue):
         curr = queue.popleft() 
-        print(curr)
+        result.append(curr)
         for next in graph[curr]:
             indegree[next] -= 1
             if(indegree[next]==0):
                 queue.append(next)
 
-            
-# 사이클 판별 
-def dfs(curr):
-    global flag 
-    visited[curr] = True  
-    recur[curr] = True 
-    for next in graph[curr]:
-        if not visited[next]:
-            dfs(next)
-        elif recur[next]:
-            flag = True 
-    recur[curr] = False
-
-start = 1  
 
 N,M = map(int,input().split())
 graph = [set() for _ in range(N+1)]
 indegree = [INF]+[0 for _ in range(1,N+1)]
 seqs = [list(map(int,input().split()))[1:] for _ in range(M)]
+result = []
 
 for seq in seqs:
     for i in range(len(seq)-1):
@@ -44,17 +31,13 @@ for seq in seqs:
             graph[seq[i]].add(seq[i+1])
             indegree[seq[i+1]] += 1
 
-for i in range(1,N+1):
-    flag = False
-    visited = [True]+[False for _ in range(1,N+1)]
-    recur = [True]+[False for _ in range(1,N+1)]
-    dfs(i) 
-    if(flag):
-        print(0)
-        sys.exit()
        
 ts() 
-    
+if(len(result)!=N):
+    print(0)
+    sys.exit()
+for r in result:
+    print(r)
 
 
 
