@@ -7,7 +7,7 @@ input = sys.stdin.readline
 
 def solution():
 
-    def BFS(N,start,end):
+    def BFS(N,start):
 
         visited = [False for _ in range(N)]
         visited[start] = True 
@@ -19,8 +19,8 @@ def solution():
             curr_idx,curr_total = queue.popleft()
             
             for next_idx in adj[curr_idx]:
-                if(curr_total+1>0 and next_idx==end):
-                    answers[start][end] = 1
+                if(curr_total+1>0):
+                    answers[start][next_idx] = 1
                 if(not visited[next_idx]):
                     queue.append((next_idx,curr_total+1))
                     visited[next_idx]=True 
@@ -38,8 +38,7 @@ def solution():
             if(temp[j]==1):
                 adj[i].append(j)
     for i in range(N):
-        for j in range(N):
-            BFS(N,i,j) 
+        BFS(N,i) 
     for answer in answers:
         print(*answer)
 
