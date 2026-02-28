@@ -1,5 +1,4 @@
 import sys 
-import heapq 
 
 input = sys.stdin.readline 
 
@@ -18,9 +17,9 @@ def solution():
         like_dict[temp[0]] = temp[1:]
  
     def simulation(self,like):
-        pq = []
-        heapq.heapify(pq)
-        
+        # 클수록, 클수록, 작을수록, 작을수록 
+        best_pos = (-1,-1,-N,-N)
+
         for cr in range(N):
             for cc in range(N):
                 if(graph[cr][cc]!=0):   
@@ -35,11 +34,14 @@ def solution():
                             like_cnt += 1
                         elif(graph[nr][nc]==0):
                             empty_cnt += 1 
-                heapq.heappush(pq,(-like_cnt,-empty_cnt,cr,cc))
+                # heapq.heappush(pq,(-like_cnt,-empty_cnt,cr,cc))
+                curr_pos = (like_cnt,empty_cnt,-cr,-cc)
+                if(curr_pos > best_pos):
+                    best_pos = curr_pos 
                 # print(f"-like_cnt:{-like_cnt},-empty_cnt:{-empty_cnt},cr:{cr},cc:{cc}")
-        a_like,a_empty,ar,ac = heapq.heappop(pq)
+        # a_like,a_empty,ar,ac = heapq.heappop(pq)
         # print(f"a_like:{a_like},a_empty:{a_empty},ar:{ar},ac:{ac}")
-        return ar,ac
+        return -best_pos[2],-best_pos[3]
                 
         
     for key in like_dict.keys(): 
@@ -89,7 +91,7 @@ print(solution())
 
 1e8인데 
 N 최대 20 
-heapq는 값 오름차순으로 정렬 
+heapq는 값 오름차순 순으로 정렬 
 
 
 
