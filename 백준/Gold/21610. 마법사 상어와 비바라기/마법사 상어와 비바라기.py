@@ -13,6 +13,7 @@ def solution():
                 if(graph[r][c]>=2 and not visited[r][c]):
                     graph[r][c] -= 2
                     temp.append((r,c))
+                visited[r][c] = False 
         
         return temp 
                     
@@ -24,16 +25,11 @@ def solution():
             nc = (cc + dc[dir]*cnt)%N 
 
             temp.append((nr,nc))
-
-        return temp 
-        
-    def rain():
-        for r,c in clouds:
+            
+        for r,c in temp:
             graph[r][c] += 1
             
-    def magic():
-        # 2,4,6,8 
-        for cr,cc in clouds:
+        for cr,cc in temp:
             cnt = 0 
             for i in range(2,9,2):
                 nr = cr + dr[i]
@@ -41,28 +37,40 @@ def solution():
                 if(0<=nr<N and 0<=nc<N and graph[nr][nc]!=0):
                     cnt += 1
             graph[cr][cc] += cnt 
+
+        return temp 
+        
+    # def rain():
+    #     for r,c in clouds:
+    #         graph[r][c] += 1
+            
+    # def magic():
+    #     # 2,4,6,8 
+    #     for cr,cc in clouds:
+    #         cnt = 0 
+    #         for i in range(2,9,2):
+    #             nr = cr + dr[i]
+    #             nc = cc + dc[i]
+    #             if(0<=nr<N and 0<=nc<N and graph[nr][nc]!=0):
+    #                 cnt += 1
+    #         graph[cr][cc] += cnt 
             
             
     N,M = map(int,input().split())
     graph = [list(map(int,input().split())) for _ in range(N)]
     move = [list(map(int,input().split())) for _ in range(M)]
+    visited = [[False]*N for _ in range(N)]
     clouds = [(N-1, 0), (N-1, 1), (N-2, 0), (N-2, 1)]
 
-    
     for i in range(len(move)):
         clouds = move_clouds(move[i][0],move[i][1])
-        visited = [[False]*N for _ in range(N)]
         for cr,cc in clouds:
             visited[cr][cc] = True 
-        rain() 
-        magic() 
+        # rain()
+        # magic()
         clouds = get_cloud() 
-        
-    answer = 0 
-    for i in range(N):
-        for j in range(N):
-            answer += graph[i][j]
-    return answer 
+
+    return sum(map(sum,graph)) 
                 
 print(solution())
 
