@@ -1,16 +1,10 @@
 import sys 
+from itertools import combinations 
 
 input = sys.stdin.readline 
 
 N,M = map(int,input().split())
+arr = [i for i in range(1,N+1)]
 
-def bt(curr,cnt,seq):
-    if cnt == M:
-        print(*seq)
-        return 
-    for next in range(curr+1,N+1):
-        bt(next,cnt+1,seq+[next])
-
-
-bt(0,0,[])
-    
+for seq in combinations(arr,M):
+    print(*seq)
