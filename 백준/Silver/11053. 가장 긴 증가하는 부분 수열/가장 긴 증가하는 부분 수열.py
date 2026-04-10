@@ -1,4 +1,5 @@
 import sys 
+from bisect import bisect_left 
 
 input = sys.stdin.readline 
 
@@ -11,13 +12,9 @@ for i in range(N):
         seq.append(arr[i])
         continue 
     # lower bound 찾기 
-    last_idx = len(seq)-1
-    while(-1<=last_idx):
-        if(last_idx==-1 or seq[last_idx]<arr[i]):
-            seq[last_idx+1] = arr[i]
-            break 
-        else:
-            last_idx -= 1 
+    last_idx = bisect_left(seq,arr[i])
+    seq[last_idx] = arr[i]
+
     
 
 print(len(seq))
