@@ -1,5 +1,5 @@
 import sys 
-sys.setrecursionlimit(10**6)
+from collections import deque 
 
 input = sys.stdin.readline 
 
@@ -11,17 +11,19 @@ for _ in range(N-1):
     s,e = map(int,input().split())
     adj[e].append(s)
     adj[s].append(e) 
-visited = [True]*2+[False]*(N-1) 
 
-def dfs(curr):
-    if len(adj[curr])==0:
-        return 
+def bfs(start):
+    visited = [False]*(N+1)
+    visited[start] = True 
+    queue = deque([start])
     
-    for next in adj[curr]:
-        if not visited[next]:
-            parents[next] = curr 
-            visited[next] = True 
-            dfs(next)
-dfs(1)
+    while(queue):
+        curr = queue.popleft() 
+        for next in adj[curr]:
+            if not visited[next]:
+                visited[next] = True 
+                queue.append(next)
+                parents[next] = curr 
+bfs(1) 
 print(*parents[2:],sep='\n')
     
