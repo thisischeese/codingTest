@@ -1,31 +1,27 @@
 import sys 
 sys.setrecursionlimit(10**6)
 
+input = sys.stdin.readline 
 
-def DFS(curr_idx):
-    global N,arr,visited,parents 
-    flag = False 
-    for next_idx in arr[curr_idx]:
-        if visited[next_idx] == False:
-            parents[next_idx] = curr_idx
-            visited[next_idx] = True 
-            flag = True 
-            DFS(next_idx)
-    if flag == False:
+N = int(input())
+adj = [[] for _ in range(N+1)]
+parents = [i for i in range(N+1)]
+
+for _ in range(N-1):
+    s,e = map(int,input().split())
+    adj[e].append(s)
+    adj[s].append(e) 
+visited = [True]*2+[False]*(N-1) 
+
+def dfs(curr):
+    if len(adj[curr])==0:
         return 
-            
-        
-N = int(sys.stdin.readline())
-# 0번째 노드는 무시 
-arr = [[] for _ in range(N+1)]
-for i in range(N-1):
-    v1,v2 = map(int,sys.stdin.readline().split())
-    arr[v1].append(v2)
-    arr[v2].append(v1)
-parents = [0 for _ in range(N+1)]
-visited = [False for _ in range(N+1)]
-
-visited[1] = True 
-DFS(1)
-for i in range(2,N+1):
-    print(parents[i])
+    
+    for next in adj[curr]:
+        if not visited[next]:
+            parents[next] = curr 
+            visited[next] = True 
+            dfs(next)
+dfs(1)
+print(*parents[2:],sep='\n')
+    
