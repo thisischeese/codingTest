@@ -21,6 +21,9 @@ def find(curr):
         for i in range(len(nexts)):
             if(0<=nexts[i]<=100000 and not visited[nexts[i]]):
                 visited[nexts[i]] = True 
-                queue.append((nexts[i],time+diff[i]))
+                if(diff[i]==0):
+                    queue.appendleft((nexts[i],time+diff[i]))
+                else:
+                    queue.append((nexts[i],time+diff[i]))
 
 print(find(N))
