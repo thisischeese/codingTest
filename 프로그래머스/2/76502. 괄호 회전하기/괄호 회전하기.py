@@ -2,13 +2,14 @@ from collections import deque
 
 def solution(s):
     answer,idx = len(s), 0
-    comb = (("(",")"),("{","}"),("[","]"))
+    comb = {"(":")","{":"}","[":"]"}
     stack = deque() 
-    
+    # 0 1 2 3 4 5
+    # 1 2 3 4 5 0 
     while(idx<len(s)):
-        target = s[idx:]+s[:idx]
-        for tar in target:
-            if(len(stack) and (stack[-1],tar) in comb):
+        for i in range(len(s)):
+            tar = s[(idx+i)%len(s)]
+            if(len(stack) and comb.get(stack[-1],"")==tar):
                 stack.pop() 
             else:
                 stack.append(tar)
