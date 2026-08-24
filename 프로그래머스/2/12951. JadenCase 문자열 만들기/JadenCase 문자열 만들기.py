@@ -1,47 +1,15 @@
 def solution(words):
-    answer = ""
-    spaces = []
-    idx=0
-    temp = ""
-    
-    while(idx<len(words)):
-        if(ord(words[idx])==32):
-            temp+=" "
-        elif(temp!=""):
-            spaces.append(temp)
-            temp = ""
-        else:
-            pass
-            
-        idx += 1 
-    spaces.append(temp)
-    
-    words = words.split()
-    
+    words = list(words)
     for i in range(len(words)):
-        word = words[i]
-        if(97<=ord(word[0]) and ord(word[0])<=122):
-            temp = chr(ord(word[0])-32)
-        else:
-            temp = word[0]
-
-        for j in range(1,len(word)):
-            if(65<=ord(word[j]) and ord(word[j])<=90):
-                temp += chr(ord(word[j])+32)
-            else:
-                temp += word[j]
-        words[i] = temp
-    print(spaces)  
-    if(len(spaces)>len(words)):
-        answer = spaces[0]
-    for space,word in zip(spaces,words):
-        answer+= (word+space)
-        
-    return answer 
+        if((i==0 or (i>0 and ord(words[i-1])==32)) and 97<=ord(words[i])<=122):
+            words[i] = chr(ord(words[i])-32)
+        elif((i>0 and ord(words[i-1])!=32) and 65<=ord(words[i])<=90):
+            words[i] = chr(ord(words[i])+32)
+    return "".join(words)
+    
 """
-0. 공백 기준으로 split 
-1. 모든 단어에 순회 
-2. 단어 첫 문자가 소문자 알파벳이면 대문자로 변경하기 (아스키 코드 97~122)
-3. 첫 문자 이후의 알파벳을 모두 소문자로 변경하기 
-4. 다시 문자열로 바꿔서 return 
+1. 처음부터 문자열 스캔하기
+2. 만약 문자가 공백이거나 숫자이다 -> 그대로 추가
+3. 만약 문자가 소문자인데 이전 문자가 공백이거나 인덱스가 0이다 -> 대문자로 바꾸기
+4. 만약 문자가 대문자인데 이전 문자가 공백이 아니다 -> 소문자로 바꾸기 
 """
