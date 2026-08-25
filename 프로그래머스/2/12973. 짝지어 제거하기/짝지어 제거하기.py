@@ -1,11 +1,7 @@
 def solution(words):
-    words = list(words)
     stack = []
     for word in words:
-        if(len(stack) and stack[-1]==word):
-            stack.pop()
-        else:
-            stack.append(word)
+        stack.pop() if(len(stack) and stack[-1]==word) else stack.append(word) 
     return 0 if len(stack) else 1
 
 """
