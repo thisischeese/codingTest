@@ -2,7 +2,7 @@ def solution(words):
     stack = []
     for word in words:
         stack.pop() if(len(stack) and stack[-1]==word) else stack.append(word) 
-    return 0 if len(stack) else 1
+    return 0 if stack else 1
 
 """
 1. 문자열을 문자 단위로 split시켜 순회할 수 있는 자료구조로 변형시키기 
