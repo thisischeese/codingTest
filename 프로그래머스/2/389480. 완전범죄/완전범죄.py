@@ -1,31 +1,25 @@
 def solution(info, n, m):
-    answer = int(1e6)
-    items_cnt = len(info)
-    visited = set()
+    INF = float('inf')
+
+    dp = [INF] * m
+    dp[0] = 0
     
-    def bt(a,b,idx):
-        nonlocal answer
-        
-        if idx==items_cnt:
-            answer = min(answer,a)
-            return 
-        
-        if (a,b,idx) in visited:
-            return 
-        
-        visited.add((a,b,idx))
-        
-        if a+info[idx][0]<n:
-            bt(a+info[idx][0],b,idx+1)
-        if b+info[idx][1]<m:
-            bt(a,b+info[idx][1],idx+1)
-            
-    bt(0,0,0)
-    return answer if answer!=int(1e6) else -1
+    for a, b in info:
+        next_dp = [INF] * m
 
+        for j in range(m):
+            if dp[j] == INF:
+                continue
 
-"""
-백트래킹인데
-n개 또는 m개 이상이면 탐색 중단
-그리고 모든 물건 탐색하지 않았다면 a 훔친 개수 업데이트 안함. 
-"""
+            # A가 훔치는 경우
+            if dp[j] + a < n:
+                next_dp[j] = min(next_dp[j], dp[j] + a)
+
+            # B가 훔치는 경우
+            if j + b < m:
+                next_dp[j + b] = min(next_dp[j + b],dp[j])
+
+        dp = next_dp
+
+    answer = min(dp)
+    return answer if answer != INF else -1
